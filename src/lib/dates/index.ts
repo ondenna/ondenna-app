@@ -1,0 +1,64 @@
+// Season-day and timezone logic as pure functions.
+// See docs/architecture.md ("Time & Timezone Model"): a season day is a local
+// calendar date string (YYYY-MM-DD), never a UTC timestamp.
+
+export const SEASON_LENGTH_DAYS = 28;
+
+function parseIsoDate(iso: string): { y: number; m: number; d: number } {
+  const [y = NaN, m = NaN, d = NaN] = iso.split("-").map(Number);
+  return { y, m, d };
+}
+
+/** Formats a Date as a local calendar date string (YYYY-MM-DD). */
+export function toIsoDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+/** Today as a local calendar date string, in the device's timezone. */
+export function isoDateToday(): string {
+  return toIsoDate(new Date());
+}
+
+/** Converts a local calendar date string to a Date at local midnight. */
+export function isoDateToDate(iso: string): Date {
+  const { y, m, d } = parseIsoDate(iso);
+  return new Date(y, m - 1, d);
+}
+
+/** Adds whole days to a calendar date string. */
+export function addDays(iso: string, days: number): string {
+  const { y, m, d } = parseIsoDate(iso);
+  const date = new Date(Date.UTC(y, m - 1, d + days));
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(date.getUTCDate()).padStart(2, "0");
+  return `${date.getUTCFullYear()}-${mm}-${dd}`;
+}
+
+/**
+ * Whole days from `from` to `to`. Computed in UTC from the date components,
+ * so DST shifts and timezones can never produce fractional days.
+ */
+export function daysBetween(from: string, to: string): number {
+  const a = parseIsoDate(from);
+  const b = parseIsoDate(to);
+  return Math.round(
+    (Date.UTC(b.y, b.m - 1, b.d) - Date.UTC(a.y, a.m - 1, a.d)) / 86_400_000,
+  );
+}
+
+/**
+ * 1-based season day of `date` for a season starting on `startDate`.
+ * Values below 1 mean the season has not started; values above
+ * SEASON_LENGTH_DAYS mean it is over.
+ */
+export function seasonDayNumber(startDate: string, date: string): number {
+  return daysBetween(startDate, date) + 1;
+}
+
+/** Last calendar date of a season (inclusive): start + 27 days. */
+export function seasonEndDate(startDate: string): string {
+  return addDays(startDate, SEASON_LENGTH_DAYS - 1);
+}

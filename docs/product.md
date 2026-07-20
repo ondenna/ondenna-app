@@ -165,6 +165,8 @@ History
 
 Settings
 
+Optional daily reminder (one per day, off by default)
+
 ---
 
 # Not Included in MVP
@@ -249,9 +251,11 @@ The product should encourage users to leave the app and live their lives.
 
 Users complete seasons.
 
-Users return daily.
+Users intentionally continue their current season.
 
 Users start another season.
+
+User wellbeing always has priority over engagement.
 
 Users feel calmer after opening the app.
 

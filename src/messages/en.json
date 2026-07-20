@@ -1,0 +1,46 @@
+{
+  "app": {
+    "name": "Ondenna",
+    "tagline": "One season. One intentional change.",
+    "description": "Ondenna helps you change one thing at a time through 28-day seasons."
+  },
+  "welcome": {
+    "title": "Welcome to Ondenna",
+    "subtitle": "One season. One intentional change.",
+    "cta": "Start your first season"
+  },
+  "onboarding": {
+    "back": "Back",
+    "continue": "Continue",
+    "focus": {
+      "question": "What do you want to change this season?",
+      "placeholder": "One change, in your own words",
+      "error": "Write a few words about your change.",
+      "examplesLabel": "For example",
+      "examples": {
+        "sleep": "Sleep before midnight",
+        "write": "Write every morning",
+        "move": "Move for 20 minutes a day"
+      }
+    },
+    "why": {
+      "question": "Why is this important to you?",
+      "placeholder": "A few honest sentences are enough.",
+      "error": "Take a moment — one sentence is enough."
+    },
+    "date": {
+      "question": "When does your season begin?",
+      "label": "Start date",
+      "endsOn": "Your 28-day season ends on {date}.",
+      "cta": "Begin season"
+    }
+  },
+  "dashboard": {
+    "day": "Day {day} of {length}",
+    "startsOn": "Your season begins on {date}.",
+    "commitmentTitle": "Today's commitment",
+    "commitmentPlaceholder": "Your daily check-in will live here.",
+    "checkIn": "Check in",
+    "checkInHint": "Check-in opens soon."
+  }
+}

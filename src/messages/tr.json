@@ -1,0 +1,46 @@
+{
+  "app": {
+    "name": "Ondenna",
+    "tagline": "Tek sezon. Tek bilinçli değişim.",
+    "description": "Ondenna, 28 günlük sezonlarla her seferinde tek bir şeyi değiştirmenize yardımcı olur."
+  },
+  "welcome": {
+    "title": "Ondenna'ya hoş geldin",
+    "subtitle": "Tek sezon. Tek bilinçli değişim.",
+    "cta": "İlk sezonunu başlat"
+  },
+  "onboarding": {
+    "back": "Geri",
+    "continue": "Devam et",
+    "focus": {
+      "question": "Bu sezon neyi değiştirmek istiyorsun?",
+      "placeholder": "Tek bir değişim, kendi kelimelerinle",
+      "error": "Değişimin hakkında birkaç kelime yaz.",
+      "examplesLabel": "Örneğin",
+      "examples": {
+        "sleep": "Gece yarısından önce uyumak",
+        "write": "Her sabah yazmak",
+        "move": "Günde 20 dakika hareket etmek"
+      }
+    },
+    "why": {
+      "question": "Bu senin için neden önemli?",
+      "placeholder": "Birkaç içten cümle yeterli.",
+      "error": "Acele etme — tek bir cümle bile yeterli."
+    },
+    "date": {
+      "question": "Sezonun ne zaman başlıyor?",
+      "label": "Başlangıç tarihi",
+      "endsOn": "28 günlük sezonun {date} tarihinde sona eriyor.",
+      "cta": "Sezonu başlat"
+    }
+  },
+  "dashboard": {
+    "day": "Gün {day} / {length}",
+    "startsOn": "Sezonun {date} tarihinde başlıyor.",
+    "commitmentTitle": "Bugünün taahhüdü",
+    "commitmentPlaceholder": "Günlük check-in burada olacak.",
+    "checkIn": "Check-in",
+    "checkInHint": "Check-in çok yakında açılıyor."
+  }
+}
