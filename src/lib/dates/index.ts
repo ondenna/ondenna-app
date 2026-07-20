@@ -28,6 +28,24 @@ export function isoDateToDate(iso: string): Date {
   return new Date(y, m - 1, d);
 }
 
+/**
+ * Converts a calendar date string to a Date at UTC midnight, for *display*.
+ *
+ * A season day is a calendar date, not an instant, so rendering it must not
+ * depend on a timezone. Pair this with `DISPLAY_DATE_TIME_ZONE` when
+ * formatting: anchoring both the value and the formatter to UTC makes
+ * "2026-03-01" render as March 1 everywhere. Using local midnight here
+ * instead would shift the date by a day wherever the formatter's timezone
+ * differs from the device's.
+ */
+export function isoDateToUtcDate(iso: string): Date {
+  const { y, m, d } = parseIsoDate(iso);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+/** Timezone to format calendar dates in. See `isoDateToUtcDate`. */
+export const DISPLAY_DATE_TIME_ZONE = "UTC";
+
 /** Adds whole days to a calendar date string. */
 export function addDays(iso: string, days: number): string {
   const { y, m, d } = parseIsoDate(iso);

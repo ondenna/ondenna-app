@@ -31,8 +31,18 @@
     "date": {
       "question": "When does your season begin?",
       "label": "Start date",
-      "endsOn": "Your 28-day season ends on {date}.",
-      "cta": "Begin season"
+      "endsOn": "Your 28-day season ends on {date}."
+    },
+    "review": {
+      "question": "Ready to begin this season?",
+      "focusLabel": "Season focus",
+      "whyLabel": "Why it matters",
+      "startLabel": "Starts",
+      "endLabel": "Ends",
+      "lengthNotice": "Every season lasts 28 days.",
+      "lockNotice": "Your season focus cannot be edited once the season begins.",
+      "cta": "Begin season",
+      "edit": "Go back and edit"
     }
   },
   "dashboard": {

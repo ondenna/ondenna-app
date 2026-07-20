@@ -66,10 +66,22 @@ step. Only reachable when the user has **no active season** (hard rule).
 
 ## 2d. Review & commit
 
-- **Question:** "Ready to commit to this season?"
-- **Primary action:** "Start season"
-- **Content:** focus, why, dates. A single line explains: the season cannot
-  be edited once it starts, and missing days never fails a season.
+- **Question:** "Ready to begin this season?"
+- **Primary action:** "Begin season" — this is where the season actually
+  starts. No step after it.
+- **Secondary action:** "Go back and edit", returning to the start-date step.
+  From there the header back control walks every earlier step.
+- **Content:** the whole draft read back as label/value pairs — season focus,
+  why it matters, start date, end date.
+- **Notices:** one quiet line that every season lasts 28 days, and one clear
+  line that the season focus cannot be edited once the season begins. The
+  second is associated with the primary action via `aria-describedby`.
+- **No confirmation checkbox.** The review content plus a deliberately named
+  primary action carry the commitment; a checkbox would add friction without
+  adding understanding.
+- **Data retention:** moving backwards never discards an answer, including
+  text typed but not yet submitted. The draft is the source of truth and each
+  step rehydrates from it.
 
 ---
 

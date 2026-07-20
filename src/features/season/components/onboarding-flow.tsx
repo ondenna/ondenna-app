@@ -7,11 +7,12 @@ import { useState } from "react";
 
 import { DateStep } from "@/features/season/components/date-step";
 import { FocusStep } from "@/features/season/components/focus-step";
+import { ReviewStep } from "@/features/season/components/review-step";
 import { WelcomeStep } from "@/features/season/components/welcome-step";
 import { WhyStep } from "@/features/season/components/why-step";
 import { cn } from "@/lib/utils";
 
-const STEPS = ["welcome", "focus", "why", "date"] as const;
+const STEPS = ["welcome", "focus", "why", "date", "review"] as const;
 
 type Step = (typeof STEPS)[number];
 
@@ -56,7 +57,10 @@ export function OnboardingFlow() {
             <FocusStep onNext={() => setStep("why")} />
           ) : null}
           {step === "why" ? <WhyStep onNext={() => setStep("date")} /> : null}
-          {step === "date" ? <DateStep /> : null}
+          {step === "date" ? (
+            <DateStep onNext={() => setStep("review")} />
+          ) : null}
+          {step === "review" ? <ReviewStep onBack={goBack} /> : null}
         </motion.div>
       </AnimatePresence>
     </main>

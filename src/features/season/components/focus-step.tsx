@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,16 @@ export function FocusStep({ onNext }: { onNext: () => void }) {
     resolver: zodResolver(focusSchema),
     defaultValues: { focus },
   });
+
+  // Each step unmounts when the flow moves, so in-progress text is kept in
+  // the draft on the way out. Without this, going back would silently
+  // discard what the user had typed but not yet submitted.
+  useEffect(
+    () => () => {
+      setFocus(form.getValues("focus").trim());
+    },
+    [form, setFocus],
+  );
 
   const onSubmit = form.handleSubmit((values) => {
     setFocus(values.focus.trim());

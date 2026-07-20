@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,14 @@ export function WhyStep({ onNext }: { onNext: () => void }) {
     resolver: zodResolver(whySchema),
     defaultValues: { why },
   });
+
+  // See focus-step: keep unsubmitted text in the draft across back-navigation.
+  useEffect(
+    () => () => {
+      setWhy(form.getValues("why").trim());
+    },
+    [form, setWhy],
+  );
 
   const onSubmit = form.handleSubmit((values) => {
     setWhy(values.why.trim());

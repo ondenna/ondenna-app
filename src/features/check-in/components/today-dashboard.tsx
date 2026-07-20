@@ -6,8 +6,9 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import {
+  DISPLAY_DATE_TIME_ZONE,
   SEASON_LENGTH_DAYS,
-  isoDateToDate,
+  isoDateToUtcDate,
   isoDateToday,
   seasonDayNumber,
 } from "@/lib/dates";
@@ -37,8 +38,9 @@ export function TodayDashboard() {
       <p className="text-muted-foreground text-sm">
         {startsInFuture
           ? t("startsOn", {
-              date: format.dateTime(isoDateToDate(draft.startDate), {
+              date: format.dateTime(isoDateToUtcDate(draft.startDate), {
                 dateStyle: "long",
+                timeZone: DISPLAY_DATE_TIME_ZONE,
               }),
             })
           : t("day", { day: displayDay, length: SEASON_LENGTH_DAYS })}

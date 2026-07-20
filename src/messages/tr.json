@@ -31,8 +31,18 @@
     "date": {
       "question": "Sezonun ne zaman başlıyor?",
       "label": "Başlangıç tarihi",
-      "endsOn": "28 günlük sezonun {date} tarihinde sona eriyor.",
-      "cta": "Sezonu başlat"
+      "endsOn": "28 günlük sezonun {date} tarihinde sona eriyor."
+    },
+    "review": {
+      "question": "Bu sezona başlamaya hazır mısın?",
+      "focusLabel": "Sezon odağı",
+      "whyLabel": "Neden önemli",
+      "startLabel": "Başlangıç",
+      "endLabel": "Bitiş",
+      "lengthNotice": "Her sezon 28 gün sürer.",
+      "lockNotice": "Sezon odağın, sezon başladıktan sonra düzenlenemez.",
+      "cta": "Sezonu başlat",
+      "edit": "Geri dön ve düzenle"
     }
   },
   "dashboard": {

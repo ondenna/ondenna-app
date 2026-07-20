@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  DISPLAY_DATE_TIME_ZONE,
   addDays,
   daysBetween,
+  isoDateToUtcDate,
   seasonDayNumber,
   seasonEndDate,
   toIsoDate,
@@ -59,5 +61,24 @@ describe("seasonDayNumber", () => {
 describe("seasonEndDate", () => {
   it("is 27 days after the start", () => {
     expect(seasonEndDate("2026-07-20")).toBe("2026-08-16");
+  });
+});
+
+describe("isoDateToUtcDate", () => {
+  it("anchors the calendar date to UTC midnight", () => {
+    expect(isoDateToUtcDate("2026-03-01").toISOString()).toBe(
+      "2026-03-01T00:00:00.000Z",
+    );
+  });
+
+  // Regression: formatting a local-midnight Date in another timezone used to
+  // render the previous day. Value and formatter must share a timezone.
+  it("renders the same calendar date regardless of the device timezone", () => {
+    const formatted = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "long",
+      timeZone: DISPLAY_DATE_TIME_ZONE,
+    }).format(isoDateToUtcDate("2026-03-01"));
+
+    expect(formatted).toBe("March 1, 2026");
   });
 });

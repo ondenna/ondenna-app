@@ -7,6 +7,12 @@ export default defineConfig({
   // seconds, so assertions get generous timeouts.
   expect: { timeout: 15_000 },
   forbidOnly: !!process.env.CI,
+  // Capped at 2 locally and in CI. The suite runs against the Next.js dev
+  // server, and more parallel workers than that overwhelm Turbopack's
+  // on-demand compilation: requests fail while a route is still building,
+  // which surfaces as tests timing out on initial page render, with a
+  // different set failing each run. Two workers keeps all 18 tests green.
+  workers: 2,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {
