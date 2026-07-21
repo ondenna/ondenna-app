@@ -72,6 +72,48 @@ padding: 21px
 
 
 
+These ten values are the whole scale. Every other value, including 12px and
+
+20px, is off the grid.
+
+
+
+In Tailwind the number in a utility is multiplied by a 4px base, so the
+
+utility number is not the pixel value: \`p-6\` is 24px, not 6px. The complete
+
+mapping:
+
+
+
+| Pixels | Utility | | Pixels | Utility |
+| --- | --- | --- | --- | --- |
+| 4px | \`\*-1\` | | 40px | \`\*-10\` |
+| 8px | \`\*-2\` | | 48px | \`\*-12\` |
+| 16px | \`\*-4\` | | 64px | \`\*-16\` |
+| 24px | \`\*-6\` | | 80px | \`\*-20\` |
+| 32px | \`\*-8\` | | 96px | \`\*-24\` |
+
+
+
+where \`\*\` is a spacing prefix: p px py pt pr pb pl m mx my mt mr mb ml gap
+
+gap-x gap-y space-x space-y.
+
+
+
+There is no \`\*-3\`, \`\*-5\`, \`\*-7\`, \`\*-9\`, \`\*-11\` or \`\*-14\`. Those are the
+
+values this document rejects, not values anyone forgot.
+
+
+
+This is enforced, not merely written down: \`src/design/spacing-scale.test.ts\`
+
+fails the build on any off-grid padding, margin or gap in application code.
+
+
+
 \---
 
 
@@ -532,7 +574,7 @@ Padding
 
 
 
-20px
+24px
 
 
 

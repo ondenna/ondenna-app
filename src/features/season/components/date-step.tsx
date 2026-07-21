@@ -24,12 +24,16 @@ export function DateStep({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-1 flex-col">
       <div className="pt-8">
-        <h1 className="text-3xl font-medium tracking-tight text-balance">
-          {t("date.question")}
-        </h1>
+        <h1 className="text-h1 text-balance">{t("date.question")}</h1>
+        {/*
+          The native date picker is the best mobile experience here, so only
+          the composition around it changes. The end date is stated as one
+          quiet sentence rather than a second field or a duration readout —
+          this is choosing the start of a chapter, not configuring software.
+        */}
         <label
           htmlFor="season-start-date"
-          className="text-muted-foreground mt-8 block text-sm"
+          className="text-muted-foreground text-small mt-8 block"
         >
           {t("date.label")}
         </label>
@@ -39,9 +43,9 @@ export function DateStep({ onNext }: { onNext: () => void }) {
           value={startDate}
           min={today}
           onChange={(event) => setStartDate(event.target.value || today)}
-          className="mt-2 h-12 text-base"
+          className="mt-2"
         />
-        <p className="text-muted-foreground mt-4 text-sm">
+        <p className="text-muted-foreground text-small mt-4">
           {t("date.endsOn", {
             date: format.dateTime(endDate, {
               dateStyle: "long",
@@ -50,9 +54,12 @@ export function DateStep({ onNext }: { onNext: () => void }) {
           })}
         </p>
       </div>
-      <Button size="lg" className="mt-auto w-full" onClick={onNext}>
-        {t("continue")}
-      </Button>
+
+      <div className="mt-auto pt-8">
+        <Button size="lg" className="w-full" onClick={onNext}>
+          {t("continue")}
+        </Button>
+      </div>
     </div>
   );
 }

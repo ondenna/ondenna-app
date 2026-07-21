@@ -1,0 +1,57 @@
+/*
+ * Motion tokens.
+ *
+ * docs/design-language.md: 220–280ms, fade or a small vertical slide of
+ * 20–24px, ease-out, and `prefers-reduced-motion` respected. Animation
+ * communicates state; it never decorates.
+ *
+ * Overriding Tailwind's --default-transition-* means every `transition-*`
+ * utility in the codebase is on-token without touching a single component.
+ *
+ * These values are mirrored in src/design/tokens.ts for Framer Motion,
+ * which needs them as JavaScript numbers. src/design/tokens.test.ts fails
+ * if the two ever drift apart.
+ *
+ * One documented exception exists and is deliberately absent from this file:
+ * the splash screen's 1100ms fade and 2000ms hold. The splash is a brand
+ * moment on first paint rather than a state transition, no stylesheet
+ * animates it, and giving it a --duration-* token here would invite reuse as
+ * a general duration. It lives in tokens.ts as SPLASH_FADE_MS and
+ * SPLASH_HOLD_MS, and collapses to zero under reduced motion.
+ */
+
+@theme static {
+  /** State changes the user is already looking at: hover, focus, colour. */
+  --duration-fast: 220ms;
+  /** Entering and leaving content. The standard transition. */
+  --duration-base: 260ms;
+
+  /**
+   * The house curve. This deliberately replaces Tailwind's `ease-out` so
+   * that writing `ease-out` anywhere gives the documented easing.
+   */
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --default-transition-duration: var(--duration-fast);
+  --default-transition-timing-function: var(--ease-out);
+}
+
+:root {
+  /** Small Slide. The only translation distance the product uses. */
+  --motion-slide-distance: 24px;
+}
+
+/*
+ * Reduced motion is a requirement, not an enhancement. Anything that slips
+ * past a component-level check is neutralised here.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

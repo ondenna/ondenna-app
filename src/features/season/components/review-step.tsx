@@ -37,44 +37,60 @@ export function ReviewStep({ onBack }: { onBack: () => void }) {
   return (
     <div className="flex flex-1 flex-col">
       <div className="pt-8">
-        <h1 className="text-3xl font-medium tracking-tight text-balance">
-          {t("question")}
-        </h1>
+        <h1 className="text-h1 text-balance">{t("question")}</h1>
 
-        <dl className="mt-8 space-y-6">
+        {/*
+          The draft read back as an intention, not an admin summary. Grouping
+          comes from whitespace and one hairline rule — the intention above,
+          its timing below — rather than from cards or a settings table. The
+          focus is set in the serif at heading scale because it is the thing
+          being committed to; everything else stays quiet around it.
+        */}
+        <dl className="mt-10 space-y-8">
           <div>
-            <dt className="text-muted-foreground text-sm">{t("focusLabel")}</dt>
-            <dd className="mt-1 text-lg font-medium tracking-tight text-balance">
+            <dt className="text-muted-foreground text-small">
+              {t("focusLabel")}
+            </dt>
+            <dd className="font-heading text-h2 mt-2 text-balance">
               {draft.focus}
             </dd>
           </div>
           <div>
-            <dt className="text-muted-foreground text-sm">{t("whyLabel")}</dt>
-            <dd className="mt-1 text-base leading-relaxed whitespace-pre-line">
-              {draft.why}
-            </dd>
+            <dt className="text-muted-foreground text-small">
+              {t("whyLabel")}
+            </dt>
+            <dd className="text-body mt-2 whitespace-pre-line">{draft.why}</dd>
           </div>
-          <div className="flex gap-10">
+          <div className="border-divider flex gap-10 border-t pt-8">
             <div>
-              <dt className="text-muted-foreground text-sm">
+              <dt className="text-muted-foreground text-small">
                 {t("startLabel")}
               </dt>
-              <dd className="mt-1 text-base">{longDate(draft.startDate)}</dd>
+              <dd className="text-body mt-2">{longDate(draft.startDate)}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground text-sm">{t("endLabel")}</dt>
-              <dd className="mt-1 text-base">
+              <dt className="text-muted-foreground text-small">
+                {t("endLabel")}
+              </dt>
+              <dd className="text-body mt-2">
                 {longDate(seasonEndDate(draft.startDate))}
               </dd>
             </div>
           </div>
         </dl>
 
-        <p className="text-muted-foreground mt-6 text-sm">{t("lengthNotice")}</p>
+        <p className="text-muted-foreground text-small mt-8">
+          {t("lengthNotice")}
+        </p>
       </div>
 
+      {/*
+        The commitment zone. The lock notice keeps full-strength text colour —
+        it is the one thing the user must understand before committing — but
+        it is stated plainly, never in a warning colour.
+      */}
       <div className="mt-auto pt-10">
-        <p id="season-lock-notice" className="text-sm leading-relaxed">
+        <p id="season-lock-notice" className="text-small">
           {t("lockNotice")}
         </p>
         <Button

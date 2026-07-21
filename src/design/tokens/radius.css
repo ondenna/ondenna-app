@@ -1,0 +1,28 @@
+/*
+ * Radius tokens.
+ *
+ * From docs/ui-rules.md: standard 16px, small components 12px, pills 999px.
+ * "Every interactive component shares the same radius unless there is a
+ * strong reason not to" — so `rounded-md` is the default answer, and the
+ * others need a reason.
+ *
+ * Tailwind's larger defaults (rounded-xl … rounded-4xl) are removed so the
+ * scale cannot drift back into arbitrary corners.
+ */
+
+@theme static {
+  /** Small components: compact buttons, chips, inline controls. */
+  --radius-sm: 12px;
+  /** The standard Ondenna radius. Buttons, inputs, textareas, cards. */
+  --radius-md: 16px;
+  /** Large surfaces only: bottom sheets and dialogs. */
+  --radius-lg: 24px;
+  /** Pill-shaped elements. `rounded-full` stays for true circles. */
+  --radius-pill: 9999px;
+
+  --radius-xs: initial;
+  --radius-xl: initial;
+  --radius-2xl: initial;
+  --radius-3xl: initial;
+  --radius-4xl: initial;
+}

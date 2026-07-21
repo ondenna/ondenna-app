@@ -1,0 +1,61 @@
+/*
+ * Typography tokens.
+ *
+ * Scale and line heights come from docs/ui-rules.md, fonts from
+ * docs/design-language.md: Instrument Serif for headings, Geist for body.
+ *
+ * Sizes carry their own line height, so `text-h1` is complete on its own —
+ * a size and a leading are never assigned separately in a component.
+ *
+ * `h1`–`h3` pick up the heading font automatically in globals.css, so
+ * markup only needs the size token. Use `font-heading` for the rare
+ * non-semantic case.
+ */
+
+@theme static {
+  /* Families ------------------------------------------------------------- */
+
+  /*
+   * --font-sans and --font-serif are the next/font variables declared in
+   * src/app/[locale]/layout.tsx.
+   */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+
+  /* Scale ---------------------------------------------------------------- */
+
+  /** Reserved for a single moment on a screen. Rarely used. */
+  --text-display: 40px;
+  --text-display--line-height: 1.1;
+
+  --text-h1: 32px;
+  --text-h1--line-height: 1.2;
+
+  --text-h2: 24px;
+  --text-h2--line-height: 1.2;
+
+  --text-h3: 20px;
+  --text-h3--line-height: 1.2;
+
+  /** Default reading size. Never go below this for body copy. */
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.5;
+
+  /* Letter spacing -------------------------------------------------------- */
+
+  /** The Ondenna wordmark only. Not for general use. */
+  --tracking-wordmark: 0.3em;
+}
+
+/*
+ * Weights are Tailwind's own: font-normal (400), font-medium (500),
+ * font-semibold (600). docs/ui-rules.md asks us to avoid 700+ — that is a
+ * review rule, not a missing token, so the utilities are left in place.
+ */

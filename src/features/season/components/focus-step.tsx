@@ -43,42 +43,57 @@ export function FocusStep({ onNext }: { onNext: () => void }) {
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-1 flex-col">
       <div className="pt-8">
-        <h1 className="text-3xl font-medium tracking-tight text-balance">
-          {t("focus.question")}
-        </h1>
+        <h1 className="text-h1 text-balance">{t("focus.question")}</h1>
+
         <Input
           autoFocus
           placeholder={t("focus.placeholder")}
           aria-invalid={Boolean(form.formState.errors.focus)}
-          className="mt-8 h-12 text-base"
+          className="mt-8"
           {...form.register("focus")}
         />
         {form.formState.errors.focus ? (
-          <p className="text-destructive mt-2 text-sm">{t("focus.error")}</p>
+          <p className="text-danger text-small mt-2">{t("focus.error")}</p>
         ) : null}
-        <p className="text-muted-foreground mt-10 text-sm">
-          {t("focus.examplesLabel")}
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {EXAMPLE_KEYS.map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() =>
-                form.setValue("focus", t(`focus.examples.${key}`), {
-                  shouldValidate: true,
-                })
-              }
-              className="border-border text-muted-foreground hover:text-foreground rounded-full border px-3.5 py-1.5 text-sm transition-colors"
-            >
-              {t(`focus.examples.${key}`)}
-            </button>
-          ))}
-        </div>
       </div>
-      <Button type="submit" size="lg" className="mt-auto w-full">
-        {t("continue")}
-      </Button>
+
+      {/*
+        Gentle inspiration, not a category picker. These were pills, which
+        read as selectable habit-tracker tags; as a quiet list they look like
+        examples written in the margin, which is what they are. Behaviour is
+        unchanged — tapping one fills the field. Rows are a full 44px so they
+        stay comfortable to hit despite the light treatment.
+      */}
+      <section className="mt-10">
+        <h2 className="text-muted-foreground text-small font-sans font-normal">
+          {t("focus.examplesLabel")}
+        </h2>
+        <ul className="mt-2">
+          {EXAMPLE_KEYS.map((key) => (
+            <li key={key}>
+              <button
+                type="button"
+                onClick={() =>
+                  form.setValue("focus", t(`focus.examples.${key}`), {
+                    shouldValidate: true,
+                  })
+                }
+                className="text-muted-foreground hover:text-foreground focus-visible:ring-ring text-body flex min-h-[var(--size-touch-target-min)] w-full items-center rounded-sm text-left transition-colors outline-none focus-visible:ring-3"
+              >
+                {t(`focus.examples.${key}`)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Bottom zone: the action stays thumb-reachable, and keeps clear of
+          the suggestions when the keyboard shrinks the viewport. */}
+      <div className="mt-auto pt-8">
+        <Button type="submit" size="lg" className="w-full">
+          {t("continue")}
+        </Button>
+      </div>
     </form>
   );
 }

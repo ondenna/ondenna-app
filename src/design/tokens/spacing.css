@@ -1,0 +1,43 @@
+/*
+ * Spacing tokens.
+ *
+ * docs/ui-rules.md allows exactly ten values:
+ *
+ *   4  8  16  24  32  40  48  64  80  96
+ *
+ * Tailwind derives every spacing utility from a single base multiplier, so
+ * the whole allowed scale is already expressible. The token is the 4px base
+ * below; the *rule* is the step allow-list.
+ *
+ * ── The utility number is not the pixel value ──────────────────────────
+ *
+ * Tailwind multiplies the number in a utility by the 4px base. `p-6` is
+ * 6 × 4px = 24px, not 6px. The full mapping, and the only ten spacing
+ * utilities the product may use:
+ *
+ *     utility   pixels     utility   pixels
+ *     -------   ------     -------   ------
+ *     *-1         4px      *-10        40px
+ *     *-2         8px      *-12        48px
+ *     *-4        16px      *-16        64px
+ *     *-6        24px      *-20        80px
+ *     *-8        32px      *-24        96px
+ *
+ * where * is any of p px py pt pr pb pl m mx my mt mr mb ml gap gap-x
+ * gap-y space-x space-y. Everything else — `p-3` (12px), `py-1.5` (6px),
+ * `gap-5` (20px), `p-px` (1px), `p-[13px]` — is off the scale and fails
+ * src/design/spacing-scale.test.ts.
+ *
+ * Note the gaps: there is no *-3, *-5, *-7, *-9, *-11 or *-14. Those are
+ * the values the design language rejects, not values we forgot.
+ *
+ * We deliberately do not add a second, named vocabulary (`p-safe`,
+ * `gap-section`) on top: two ways to say 24px is exactly the duplicate
+ * design pattern CLAUDE.md forbids. Sizing utilities (`h-`, `w-`, `size-`)
+ * are component geometry rather than spacing and are governed by
+ * tokens/component.css.
+ */
+
+@theme static {
+  --spacing: 4px;
+}

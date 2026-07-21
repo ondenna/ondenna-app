@@ -1,0 +1,20 @@
+/*
+ * Shadow tokens.
+ *
+ * docs/design-language.md: "The interface should feel flat, not floating.
+ * Prefer contrast through spacing rather than elevation."
+ *
+ * There are two shadows and there should never be a third. Buttons get
+ * none. If a surface needs more separation, give it more space, not more
+ * elevation.
+ *
+ * Both are tinted with the primary colour rather than black, so shadows sit
+ * in the warm palette instead of greying it.
+ */
+
+@theme static {
+  /** Cards. Barely perceptible — it only stops white-on-cream floating. */
+  --shadow-subtle: 0 1px 2px 0 rgb(15 37 40 / 0.04);
+  /** Dialogs and bottom sheets. The largest shadow the product allows. */
+  --shadow-dialog: 0 8px 24px -8px rgb(15 37 40 / 0.1);
+}

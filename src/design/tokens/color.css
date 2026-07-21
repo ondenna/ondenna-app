@@ -1,0 +1,121 @@
+/*
+ * Color tokens — "Calm Nature".
+ *
+ * Values come from docs/design-language.md. Never introduce a colour here
+ * that is not in that document without amending the document first.
+ *
+ * These are semantic, not component-specific: a token says what a colour
+ * *means* (surface, border, danger), never where it is used (button-bg).
+ *
+ * Contrast is measured against --color-background (#F7F3EC) unless noted.
+ * Every text colour below meets WCAG AA (4.5:1) except --color-subtle-
+ * foreground, which is documented as decorative-only for that reason.
+ *
+ * The authoritative table — value, intended use, prohibited use, whether a
+ * token is safe for text, and its contrast — lives in the "Color System"
+ * section of docs/design-language.md. Amend that document first.
+ */
+
+@theme static {
+  /* Canvas -------------------------------------------------------------- */
+
+  /** The page. Warm paper, never pure white. */
+  --color-background: #f7f3ec;
+  /** Raised content that needs to separate from the page: cards, sheets. */
+  --color-surface: #ffffff;
+
+  /* Text ---------------------------------------------------------------- */
+
+  /** Text Primary. Headings and body copy. 14.4:1 — AAA. */
+  --color-foreground: #0f2528;
+  /**
+   * Text Secondary. 4.6:1 — AA, and therefore the token for *all readable
+   * secondary text*: descriptions, supporting copy, form labels and help
+   * text, hints, metadata, navigation labels, timestamps.
+   *
+   * If the user is meant to read it, it belongs here — not below.
+   */
+  --color-muted-foreground: #686f72;
+  /**
+   * Muted. DECORATIVE ONLY. 2.4:1 does not meet AA at any size.
+   *
+   * Permitted: ornament that carries no information — a watermark, a
+   * separator glyph, a decorative icon that duplicates adjacent text.
+   *
+   * Prohibited: body copy, descriptions, form labels, form help text,
+   * validation messages, navigation labels, metadata, empty-state text,
+   * placeholders — anything a user must read to use the product. Reach for
+   * --color-muted-foreground instead; it is the readable secondary tone.
+   */
+  --color-subtle-foreground: #9aa09a;
+
+  /* Brand --------------------------------------------------------------- */
+
+  /** Primary actions and the deepest text. */
+  --color-primary: #0f2528;
+  --color-primary-foreground: #f7f3ec;
+
+  /**
+   * Accent. 3.7:1 — enough for focus rings, fills and other non-text UI,
+   * not enough for text. Use --color-accent-strong when accent must carry
+   * words.
+   */
+  --color-accent: #2e8c77;
+  --color-accent-foreground: #ffffff;
+  /** Accent that can hold text: 7.2:1 on background, 8.0:1 under white. */
+  --color-accent-strong: #1f5a4b;
+
+  /* Lines and fills ------------------------------------------------------ */
+
+  /** Decorative outlines: cards, chips, brand geometry. 1px, never thicker. */
+  --color-border: #ddd6c8;
+  /**
+   * The boundary of an interactive control — inputs, textareas.
+   *
+   * A separate token because --color-border is 1.3:1 against the canvas,
+   * which is fine for decoration but fails WCAG 1.4.11 for a boundary that
+   * is the only thing identifying a control. This is the lightest warm tone
+   * that still clears 3:1 (3.2:1 on background, 3.5:1 on surface).
+   */
+  --color-control-border: #94876d;
+  /** In-content separators. Quieter than a border. */
+  --color-divider: #eae4d8;
+  /** A subtle warm fill: hover states, quiet backgrounds. */
+  --color-muted: #efeae0;
+
+  /* State ---------------------------------------------------------------- */
+
+  /*
+   * Desaturated on purpose. The design language forbids bright reds and
+   * neon; these read as clay, moss and amber rather than alert colours.
+   * Never rely on them alone — always pair with words or an icon.
+   */
+  --color-success: #2f6b54; /* 5.7:1 */
+  --color-warning: #7a5a1e; /* 5.7:1 */
+  --color-danger: #8c4032; /* 6.6:1 */
+
+  /* Interaction ---------------------------------------------------------- */
+
+  /** Focus ring. Visible focus is required on every interactive element. */
+  --color-ring: #2e8c77;
+  /** Disabled surfaces and the text that sits on them. */
+  --color-disabled: #efe9de;
+  --color-disabled-foreground: #9aa09a;
+}
+
+/*
+ * High contrast.
+ *
+ * A strengthening of the same palette, not a second theme. Secondary text
+ * and borders are where the warm palette gives up the most contrast, so
+ * those are what move; the canvas and primary text already clear AAA.
+ */
+@media (prefers-contrast: more) {
+  :root {
+    --color-muted-foreground: #4a5153; /* 4.6:1 → 7.3:1 */
+    --color-subtle-foreground: #686f72; /* 2.4:1 → 4.6:1, now AA */
+    --color-border: #a89c85;
+    --color-control-border: #6f6450; /* 3.2:1 → 5.3:1 */
+    --color-divider: #ddd6c8;
+  }
+}

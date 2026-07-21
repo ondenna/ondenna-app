@@ -42,8 +42,16 @@ Open http://localhost:3000 — you'll be redirected to the default locale
 
 See the "Repository Layout" section of `docs/architecture.md`. In short:
 routes live under `src/app/[locale]/`, product code lives in feature modules
-under `src/features/`, shared primitives in `src/components/ui`, and all
-user-facing copy in `src/messages/{en,tr}.json`.
+under `src/features/`, shared primitives in `src/components/ui`, design
+tokens in `src/design/`, and all user-facing copy in
+`src/messages/{en,tr}.json`.
+
+## Design tokens
+
+Every colour, size, radius, shadow and duration comes from `src/design/`.
+Components consume them as Tailwind utilities (`bg-surface`, `text-h1`,
+`rounded-md`, `shadow-subtle`); hardcoded design values are a bug. Read
+[`src/design/README.md`](./src/design/README.md) before styling anything.
 
 ## Deliberately not here yet
 

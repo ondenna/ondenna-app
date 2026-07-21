@@ -84,9 +84,7 @@ describe("ReviewStep", () => {
     const onBack = vi.fn();
     renderReview(onBack);
 
-    await user.click(
-      screen.getByRole("button", { name: "Go back and edit" }),
-    );
+    await user.click(screen.getByRole("button", { name: "Go back and edit" }));
 
     expect(onBack).toHaveBeenCalledOnce();
     expect(useSeasonDraftStore.getState().hasStarted).toBe(false);

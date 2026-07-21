@@ -34,8 +34,8 @@ export function TodayDashboard() {
   const displayDay = Math.min(Math.max(day, 1), SEASON_LENGTH_DAYS);
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-6 pt-16 pb-8">
-      <p className="text-muted-foreground text-sm">
+    <main className="max-w-app mx-auto flex min-h-dvh w-full flex-col px-6 pt-16 pb-8">
+      <p className="text-muted-foreground text-small">
         {startsInFuture
           ? t("startsOn", {
               date: format.dateTime(isoDateToUtcDate(draft.startDate), {
@@ -45,13 +45,13 @@ export function TodayDashboard() {
             })
           : t("day", { day: displayDay, length: SEASON_LENGTH_DAYS })}
       </p>
-      <h1 className="mt-3 text-3xl font-medium tracking-tight text-balance">
-        {draft.focus}
-      </h1>
+      <h1 className="text-h1 mt-2 text-balance">{draft.focus}</h1>
 
-      <section className="border-border bg-card mt-12 rounded-2xl border p-5">
-        <h2 className="text-sm font-medium">{t("commitmentTitle")}</h2>
-        <p className="text-muted-foreground mt-1.5 text-sm">
+      <section className="border-border bg-surface shadow-subtle mt-12 rounded-md border p-6">
+        <h2 className="text-small font-sans font-medium">
+          {t("commitmentTitle")}
+        </h2>
+        <p className="text-muted-foreground text-small mt-2">
           {t("commitmentPlaceholder")}
         </p>
       </section>
@@ -60,7 +60,7 @@ export function TodayDashboard() {
         <Button size="lg" className="w-full" disabled>
           {t("checkIn")}
         </Button>
-        <p className="text-muted-foreground mt-3 text-center text-xs">
+        <p className="text-muted-foreground text-caption mt-2 text-center">
           {t("checkInHint")}
         </p>
       </div>

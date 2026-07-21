@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -8,13 +8,22 @@ import { routing } from "@/i18n/routing";
 
 import "../globals.css";
 
+// The two official faces (docs/design-language.md): Instrument Serif for
+// headings, Geist for body. They are wired to --font-heading and --font-sans
+// in src/design/tokens/typography.css; nothing references them directly.
 const geistSans = Geist({
-  variable: "--font-sans",
+  variable: "--font-geist",
   subsets: ["latin", "latin-ext"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin", "latin-ext"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  weight: "400",
   subsets: ["latin", "latin-ext"],
 });
 
@@ -45,10 +54,15 @@ export default async function LocaleLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    // The font variables belong on <html>, not <body>: the typography tokens
+    // are declared at :root, and a custom property is substituted where it is
+    // declared. On <body> they would be out of scope and --font-sans would
+    // resolve to nothing.
+    <html
+      lang={locale}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+    >
+      <body className="antialiased">
         <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
       </body>
     </html>

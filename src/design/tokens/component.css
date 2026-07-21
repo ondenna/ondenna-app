@@ -1,0 +1,57 @@
+/*
+ * Component tokens — the geometry docs/ui-rules.md fixes for each primitive.
+ *
+ * Sprint 2A declares these; it does not apply them. Buttons, inputs,
+ * textareas and cards keep the geometry they ship with today and adopt
+ * these values in Sprint 2B, when the primitives are actually redesigned.
+ * They live here so that redesign is a lookup, not a re-reading of the docs.
+ *
+ * The one exception is --container-app, applied now: every screen shell
+ * already hardcoded a max width, and a hardcoded width is exactly what this
+ * sprint exists to remove.
+ */
+
+@theme static {
+  /** Maximum content width. Reading must stay comfortable on desktop. */
+  --container-app: 480px;
+}
+
+:root {
+  /* Touch ---------------------------------------------------------------- */
+
+  /** Nothing interactive may be smaller than this in either dimension. */
+  --size-touch-target-min: 44px;
+
+  /* Buttons -------------------------------------------------------------- */
+
+  --size-button-height: 52px;
+  --space-button-inline: 24px;
+  --space-button-icon-gap: 8px;
+
+  /* Inputs --------------------------------------------------------------- */
+
+  --size-input-height: 56px;
+  --space-input-padding: 16px;
+  --size-textarea-min-height: 160px;
+
+  /* Cards ---------------------------------------------------------------- */
+
+  /*
+   * 24px, which is a step on the 8-point scale (`p-6`). It was 20px, which
+   * the scale does not allow — docs/ui-rules.md contradicted itself and was
+   * amended in favour of the scale.
+   *
+   * Because 24px is on the scale, cards use the `p-6` utility directly. This
+   * token records the card specification for the Card primitive; it is not
+   * an alternative way to write 24px.
+   */
+  --space-card-padding: 24px;
+
+  /* Screen shell --------------------------------------------------------- */
+
+  --space-safe-inline: 24px;
+  --space-safe-top: 24px;
+  --space-safe-bottom: 32px;
+  --size-topbar-height: 64px;
+  --size-bottom-nav-height: 72px;
+}

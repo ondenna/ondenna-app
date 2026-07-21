@@ -63,6 +63,11 @@ ondenna-app/
 │   │   └── globals.css
 │   ├── components/
 │   │   └── ui/              # shadcn/ui primitives (generated, then owned)
+│   ├── design/              # Design token layer — see below
+│   │   ├── tokens/          # color, typography, spacing, radius, shadow,
+│   │   │                    #   motion, component (all CSS)
+│   │   ├── index.css        # single entry point, imported by globals.css
+│   │   └── tokens.ts        # small JS mirror for Framer Motion + manifest
 │   ├── features/            # Feature modules — see below
 │   │   ├── season/          # Creation, lifecycle, past-seasons list
 │   │   ├── check-in/
@@ -94,6 +99,39 @@ Rules:
   `tests/e2e`.
 - `components/ui` is reserved for shadcn/ui primitives. Product components
   live in their feature module.
+- No component may hardcode a design value. Colours, sizes, radii, shadows
+  and durations come from `src/design/` — see below.
+
+---
+
+# Design Tokens
+
+`design-language.md` and `ui-rules.md` decide the values; `src/design/` is
+where they become code. The rules that matter architecturally:
+
+- **CSS is the source of truth.** Tokens are authored as Tailwind
+  `@theme static` blocks so each one is both a custom property and a
+  utility. `src/design/index.css` is the only file `globals.css` imports.
+- **`src/design/tokens.ts` is a mirror, not a second home.** It exists for
+  Framer Motion and the PWA manifest, which cannot read custom properties.
+  A unit test fails if it drifts from the CSS. Nothing that can be a utility
+  or a `var()` belongs in it.
+- **Tokens are semantic.** `--color-danger`, never `--color-delete-button`.
+  Component-specific colours are not tokens.
+- **The 8-point scale is enforced, not documented.**
+  `src/design/spacing-scale.test.ts` fails the build on off-grid padding,
+  margin or gap in product code. The documented off-scale geometry (card
+  padding, control heights) lives in `tokens/component.css` and is
+  referenced by name.
+- **shadcn's token names survive as aliases** in `globals.css`, pointed at
+  the Ondenna tokens. One authoritative value, two names, shrinking as the
+  vendored primitives are redesigned.
+- **Dark mode is prepared, not implemented.** Every colour resolves through
+  a semantic token, so a dark theme is a redeclaration of those tokens. The
+  `.dark` block is intentionally empty until the Settings theme control
+  ships; it must not be filled with placeholder values.
+
+Full contributor guide: `src/design/README.md`.
 
 ---
 
@@ -224,7 +262,9 @@ This is the most bug-prone area of the product; the rules are fixed here.
 - **TypeScript**: `strict` plus `noUncheckedIndexedAccess`. No `any` in
   committed code.
 - **ESLint + Prettier**: single config, enforced in CI.
-- **Vitest**: unit tests, required for all `lib/dates/` logic from day one.
+- **Vitest**: unit tests, required for all `lib/dates/` logic from day one,
+  plus the design-system guards in `src/design/` (token mirror, spacing
+  scale).
 - **Playwright**: E2E harness configured against the dev server; specs grow
   with features.
 - **CI (GitHub Actions)**: on every push and PR — install (pnpm), lint,

@@ -1,0 +1,17 @@
+/*
+ * The Ondenna design token layer.
+ *
+ * This is the single entry point: src/app/globals.css imports this file and
+ * nothing else imports the individual token files. Adding a token means
+ * adding it to one of the files below, never to globals.css or a component.
+ *
+ * See src/design/README.md for how tokens are consumed and extended.
+ */
+
+@import "./tokens/color.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/radius.css";
+@import "./tokens/shadow.css";
+@import "./tokens/motion.css";
+@import "./tokens/component.css";
