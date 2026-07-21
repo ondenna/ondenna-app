@@ -48,9 +48,20 @@
   "dashboard": {
     "day": "Day {day} of {length}",
     "startsOn": "Your season begins on {date}.",
-    "commitmentTitle": "Today's commitment",
-    "commitmentPlaceholder": "Your daily check-in will live here.",
-    "checkIn": "Check in",
-    "checkInHint": "Check-in opens soon."
+    "endedOn": "Your season ended on {date}.",
+    "state": {
+      "upcoming": {
+        "title": "Nothing to do yet.",
+        "body": "Take your time. Today's check-in opens when your season begins."
+      },
+      "active": {
+        "title": "Today's check-in opens soon.",
+        "body": "Nothing else is needed from you today."
+      },
+      "complete": {
+        "title": "This season is complete.",
+        "body": "Your season report will live here."
+      }
+    }
   }
 }

@@ -48,9 +48,20 @@
   "dashboard": {
     "day": "Gün {day} / {length}",
     "startsOn": "Sezonun {date} tarihinde başlıyor.",
-    "commitmentTitle": "Bugünün taahhüdü",
-    "commitmentPlaceholder": "Günlük check-in burada olacak.",
-    "checkIn": "Check-in",
-    "checkInHint": "Check-in çok yakında açılıyor."
+    "endedOn": "Sezonun {date} tarihinde sona erdi.",
+    "state": {
+      "upcoming": {
+        "title": "Henüz yapılacak bir şey yok.",
+        "body": "Acele etme. Günlük check-in, sezonun başladığında açılacak."
+      },
+      "active": {
+        "title": "Bugünün check-in'i yakında açılıyor.",
+        "body": "Bugün senden başka bir şey beklenmiyor."
+      },
+      "complete": {
+        "title": "Bu sezon tamamlandı.",
+        "body": "Sezon raporun burada olacak."
+      }
+    }
   }
 }

@@ -40,7 +40,9 @@ test("completes onboarding and lands on the empty dashboard", async ({
   ).toBeVisible();
   await expect(page.getByText("Every season lasts 28 days.")).toBeVisible();
   await expect(
-    page.getByText("Your season focus cannot be edited once the season begins."),
+    page.getByText(
+      "Your season focus cannot be edited once the season begins.",
+    ),
   ).toBeVisible();
   await page.getByRole("button", { name: "Begin season" }).click();
 
@@ -50,7 +52,15 @@ test("completes onboarding and lands on the empty dashboard", async ({
   await expect(
     page.getByRole("heading", { name: "Sleep before midnight" }),
   ).toBeVisible();
-  await expect(page.getByRole("button", { name: "Check in" })).toBeDisabled();
+  // Check-in does not exist yet, so Today says so in words rather than
+  // offering a dead control. Replaces the old disabled-button assertion.
+  await expect(page.getByText("Today's check-in opens soon.")).toBeVisible();
+  await expect(
+    page.getByText("Nothing else is needed from you today."),
+  ).toBeVisible();
+  // Scoped to the app's own region: the dev server injects its own toolbar
+  // button into the page, which is not part of the interface under test.
+  await expect(page.getByRole("main").getByRole("button")).toHaveCount(0);
 });
 
 test("empty focus shows a calm validation message", async ({ page }) => {
