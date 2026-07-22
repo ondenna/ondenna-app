@@ -161,8 +161,13 @@ below fix the vocabulary and invariants that tables must later satisfy.
 - **Profile** — name, avatar, timezone (IANA), preferred language. Nothing more.
 - **Season** — focus (what to change), motivation (why it matters), start
   date, length (always 28), status: `active | completed | abandoned`.
-- **CheckIn** — one per season day. Fields: local calendar date, answer
-  (`yes | no`), optional short note.
+- **CheckIn** — one per season day. Fields: local calendar date (`date`),
+  answer (`yes | no`), optional short note (≤500 characters, whitespace-only
+  stored as absent), `createdAt`/`updatedAt` timestamps. `createdAt` is set
+  once and preserved through edits; `updatedAt` changes on every save. The
+  season day number is never stored — it is always derived from `date` and
+  the season's `startDate` (`lib/dates/seasonDayNumber`), so there is exactly
+  one place that can disagree with itself.
 - **WeeklyReflection** — one per season week (days 7, 14, 21, 28). Three free
   text answers: what went well, what was difficult, what to improve.
 - **SeasonReport** — derived view over a finished season plus one stored
@@ -204,6 +209,12 @@ This is the most bug-prone area of the product; the rules are fixed here.
   season report.
 - All of this logic lives in `lib/dates/` as pure, unit-tested functions.
   No component computes dates inline.
+- `features/check-in/hooks/use-current-iso-date.ts` keeps "today" accurate
+  in an open tab: it schedules a single timeout for the next local midnight
+  (`lib/dates/msUntilNextLocalMidnight`) rather than polling, and re-checks
+  the date on `visibilitychange` and window `focus`. `TodayDashboard` reads
+  today's date only through this hook, never `isoDateToday()` directly, so
+  the screen can't go stale while left open.
 
 ---
 
@@ -217,6 +228,39 @@ This is the most bug-prone area of the product; the rules are fixed here.
   `messages/{en,tr}.json`. This is enforced by review, and later by lint.
 - Dates and numbers are formatted with `Intl` APIs using the active locale
   and the user's timezone.
+
+---
+
+# Temporary Client Persistence (Sprint 2C.2)
+
+Supabase is still not wired in. Check-ins must survive a browser refresh
+(this sprint's requirement), and `TodayDashboard` redirects to onboarding
+whenever there is no started season — so persisting check-ins without also
+persisting the season would leave them permanently unreachable behind that
+redirect. Both `stores/season-draft.ts` and `stores/check-ins.ts` therefore
+use Zustand's `persist` middleware against `localStorage`:
+
+- `ondenna-season-draft` — the season draft and `hasStarted`. Previously
+  Sprint 1 kept this in memory only, by explicit design; that decision is
+  superseded by the requirement above, not silently reversed. Same store,
+  same shape — only the storage backing changed.
+- `ondenna-check-ins` — `CheckIn` records keyed by local calendar date
+  (`Record<ISODate, CheckIn>`).
+
+This is **client-only, single-browser persistence**, not an account or
+cross-device store — it does not claim to be, and nothing in the UI implies
+otherwise. It is a stand-in until Supabase Auth and the `check_ins` table
+exist, at which point both stores' domain data moves server-side and
+Zustand returns to holding only ephemeral UI state, per the "Rendering &
+State Strategy" section above.
+
+**Check-ins are keyed by date only, with no season id.** This is safe today
+because "exactly one active season per user" (Hard Invariant #1) means no
+two seasons can ever claim the same date concurrently. It stops being safe
+the moment multiple seasons' history becomes browsable in the same session
+(a future sprint) — at that point check-ins need a stable season identifier
+as part of their key, which does not exist yet. Do not invent one ad hoc;
+add it when the season entity itself gets a real id.
 
 ---
 

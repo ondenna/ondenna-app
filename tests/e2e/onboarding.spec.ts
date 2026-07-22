@@ -46,21 +46,21 @@ test("completes onboarding and lands on the empty dashboard", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Begin season" }).click();
 
-  // Empty dashboard
+  // Empty dashboard, with today's check-in ready to answer (Sprint 2C.2).
   await expect(page).toHaveURL(/\/en\/today$/);
   await expect(page.getByText("Day 1 of 28")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Sleep before midnight" }),
   ).toBeVisible();
-  // Check-in does not exist yet, so Today says so in words rather than
-  // offering a dead control. Replaces the old disabled-button assertion.
-  await expect(page.getByText("Today's check-in opens soon.")).toBeVisible();
   await expect(
-    page.getByText("Nothing else is needed from you today."),
+    page.getByRole("heading", { name: "Did this feel true today?" }),
   ).toBeVisible();
-  // Scoped to the app's own region: the dev server injects its own toolbar
-  // button into the page, which is not part of the interface under test.
-  await expect(page.getByRole("main").getByRole("button")).toHaveCount(0);
+  await expect(page.getByRole("radio", { name: "Yes" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "No" })).toBeVisible();
+  // Day 1: yesterday would be before the season starts, so it is not offered.
+  await expect(page.getByRole("button", { name: "Add yesterday" })).toHaveCount(
+    0,
+  );
 });
 
 test("empty focus shows a calm validation message", async ({ page }) => {

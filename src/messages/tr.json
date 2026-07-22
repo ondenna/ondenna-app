@@ -54,14 +54,31 @@
         "title": "Henüz yapılacak bir şey yok.",
         "body": "Acele etme. Günlük check-in, sezonun başladığında açılacak."
       },
-      "active": {
-        "title": "Bugünün check-in'i yakında açılıyor.",
-        "body": "Bugün senden başka bir şey beklenmiyor."
-      },
       "complete": {
         "title": "Bu sezon tamamlandı.",
         "body": "Sezon raporun burada olacak."
       }
+    },
+    "checkIn": {
+      "question": "Bugün bu sana doğru geldi mi?",
+      "yesterdayQuestion": "Dün sana doğru geldi mi?",
+      "yesterdayContext": "Dün için kayıt, {date}.",
+      "yes": "Evet",
+      "no": "Hayır",
+      "answerRequired": "Kaydetmek için evet ya da hayır seç.",
+      "addNote": "Not ekle",
+      "notePlaceholder": "İstersen kısa bir not bırak.",
+      "noteCount": "{count} / {max}",
+      "noteTooLong": "Notunu {max} karakterin altında tut.",
+      "save": "Check-in'i kaydet",
+      "edit": "Düzenle",
+      "cancel": "İptal",
+      "recordedTitle": "Bugün kaydedildi.",
+      "recordedYesterdayTitle": "Dün kaydedildi.",
+      "recordedYes": "Evet olarak işaretledin.",
+      "recordedNo": "Hayır olarak işaretledin.",
+      "addYesterday": "Dünü ekle",
+      "editYesterday": "Dünü düzenle"
     }
   }
 }

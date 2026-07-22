@@ -7,13 +7,11 @@ import {
 /**
  * Where a season sits relative to today.
  *
- * These three are everything the current architecture can honestly know. A
- * season's position in time is derived from its start date, which the draft
- * already holds; whether the user has checked in today is *not* knowable,
- * because check-ins are not stored yet. So there is deliberately no
- * "checked in" or "ready" state here — Sprint 2C.2 adds those once there is
- * data behind them, by extending this union rather than reworking the
- * screen.
+ * These three are everything season lifecycle alone can honestly know.
+ * Whether today has been checked in is a *record*-derived question, not a
+ * date-derived one, so Sprint 2C.2 deliberately keeps it out of this union —
+ * see TodayCheckInSection, which reads the check-in store and only renders
+ * anything once this state is "active".
  */
 export type TodayState =
   | { kind: "upcoming"; startDate: string }

@@ -80,3 +80,22 @@ export function seasonDayNumber(startDate: string, date: string): number {
 export function seasonEndDate(startDate: string): string {
   return addDays(startDate, SEASON_LENGTH_DAYS - 1);
 }
+
+/**
+ * Milliseconds from `now` until the next local midnight. Used to schedule a
+ * single timeout that re-derives date state at day rollover, rather than
+ * polling. Takes `now` as a parameter so tests can pass an explicit instant
+ * instead of depending on the real clock.
+ */
+export function msUntilNextLocalMidnight(now: Date = new Date()): number {
+  const nextMidnight = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1,
+    0,
+    0,
+    0,
+    0,
+  );
+  return nextMidnight.getTime() - now.getTime();
+}

@@ -5,6 +5,7 @@ import {
   addDays,
   daysBetween,
   isoDateToUtcDate,
+  msUntilNextLocalMidnight,
   seasonDayNumber,
   seasonEndDate,
   toIsoDate,
@@ -61,6 +62,27 @@ describe("seasonDayNumber", () => {
 describe("seasonEndDate", () => {
   it("is 27 days after the start", () => {
     expect(seasonEndDate("2026-07-20")).toBe("2026-08-16");
+  });
+});
+
+describe("msUntilNextLocalMidnight", () => {
+  it("is a full day when now is exactly midnight", () => {
+    expect(msUntilNextLocalMidnight(new Date(2026, 6, 20, 0, 0, 0, 0))).toBe(
+      24 * 60 * 60 * 1000,
+    );
+  });
+
+  it("is the remaining time on an ordinary afternoon", () => {
+    const oneHour = 60 * 60 * 1000;
+    expect(msUntilNextLocalMidnight(new Date(2026, 6, 20, 23, 0, 0, 0))).toBe(
+      oneHour,
+    );
+  });
+
+  it("crosses a month boundary correctly", () => {
+    expect(msUntilNextLocalMidnight(new Date(2026, 6, 31, 23, 30, 0, 0))).toBe(
+      30 * 60 * 1000,
+    );
   });
 });
 

@@ -2,6 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  // Compiles /onboarding and /today once before the suite runs, so cold
+  // Turbopack compilation (see tests/e2e/global-setup.ts) doesn't eat into
+  // an individual test's own timeout.
+  globalSetup: "./tests/e2e/global-setup.ts",
   fullyParallel: true,
   // The dev server compiles routes on demand; first hits can take several
   // seconds, so assertions get generous timeouts.

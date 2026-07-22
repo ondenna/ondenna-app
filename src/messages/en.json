@@ -54,14 +54,31 @@
         "title": "Nothing to do yet.",
         "body": "Take your time. Today's check-in opens when your season begins."
       },
-      "active": {
-        "title": "Today's check-in opens soon.",
-        "body": "Nothing else is needed from you today."
-      },
       "complete": {
         "title": "This season is complete.",
         "body": "Your season report will live here."
       }
+    },
+    "checkIn": {
+      "question": "Did this feel true today?",
+      "yesterdayQuestion": "Did yesterday feel true?",
+      "yesterdayContext": "Recording yesterday, {date}.",
+      "yes": "Yes",
+      "no": "No",
+      "answerRequired": "Choose yes or no to save.",
+      "addNote": "Add a note",
+      "notePlaceholder": "A short note, if you'd like.",
+      "noteCount": "{count} / {max}",
+      "noteTooLong": "Keep your note under {max} characters.",
+      "save": "Save check-in",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "recordedTitle": "Today is recorded.",
+      "recordedYesterdayTitle": "Yesterday is recorded.",
+      "recordedYes": "You answered yes.",
+      "recordedNo": "You answered no.",
+      "addYesterday": "Add yesterday",
+      "editYesterday": "Edit yesterday"
     }
   }
 }

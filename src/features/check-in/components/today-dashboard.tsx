@@ -3,13 +3,14 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { useEffect } from "react";
 
+import { TodayCheckInSection } from "@/features/check-in/components/today-check-in-section";
+import { useCurrentIsoDate } from "@/features/check-in/hooks/use-current-iso-date";
 import { todayState } from "@/features/check-in/today-state";
 import { useRouter } from "@/i18n/navigation";
 import {
   DISPLAY_DATE_TIME_ZONE,
   SEASON_LENGTH_DAYS,
   isoDateToUtcDate,
-  isoDateToday,
 } from "@/lib/dates";
 import { useSeasonDraftStore } from "@/stores/season-draft";
 
@@ -31,16 +32,17 @@ export function TodayDashboard() {
   const router = useRouter();
   const draft = useSeasonDraftStore((s) => s.draft);
   const hasStarted = useSeasonDraftStore((s) => s.hasStarted);
+  const today = useCurrentIsoDate();
 
-  // Sprint 1 keeps the season in memory only, so a direct visit (or a
-  // reload) without a season quietly returns to onboarding.
+  // A direct visit (or a reload) without a started season quietly returns to
+  // onboarding.
   useEffect(() => {
     if (!hasStarted) router.replace("/onboarding");
   }, [hasStarted, router]);
 
   if (!hasStarted) return null;
 
-  const state = todayState(draft.startDate, isoDateToday());
+  const state = todayState(draft.startDate, today);
 
   const longDate = (iso: string) =>
     format.dateTime(isoDateToUtcDate(iso), {
@@ -67,24 +69,29 @@ export function TodayDashboard() {
         of text cannot hold eight hundred pixels of canvas, and the screen
         read as empty rather than composed. Grouped here it reads as one
         thought: this is the season, and this is where today sits in it.
-        The whitespace below then says the thing the copy says — nothing
-        further is being asked. In 2C.2 the check-in action lands in that
-        space, where a 52px button can anchor it the way onboarding does.
 
         One hairline separates the season from today — the same device the
         review step uses, and the reason this needs no card.
 
-        The state is written out rather than shown as a disabled button: a
-        dead control communicates nothing, while a sentence says what is true
-        and why, and stays readable to a screen reader.
+        Upcoming and complete are still written out as a sentence rather than
+        a disabled control: a dead button communicates nothing, while a
+        sentence says what is true and why, and stays readable to a screen
+        reader. Active is the one state with something to do, so it renders
+        the real check-in instead of a placeholder sentence about it.
       */}
       <section className="border-divider mt-12 border-t pt-8">
-        <h2 className="text-body font-sans font-medium">
-          {t(`state.${state.kind}.title`)}
-        </h2>
-        <p className="text-muted-foreground text-body mt-2">
-          {t(`state.${state.kind}.body`)}
-        </p>
+        {state.kind === "active" ? (
+          <TodayCheckInSection startDate={draft.startDate} today={today} />
+        ) : (
+          <>
+            <h2 className="text-body font-sans font-medium">
+              {t(`state.${state.kind}.title`)}
+            </h2>
+            <p className="text-muted-foreground text-body mt-2">
+              {t(`state.${state.kind}.body`)}
+            </p>
+          </>
+        )}
       </section>
     </main>
   );
